@@ -9,7 +9,9 @@
   "dependencies": {
     "react": "16.6.3",
     "react-native": "0.58.6",
-    "react-native-linear-gradient": "react-native-community/react-native-linear-gradient"
+    "react-native-linear-gradient": "react-native-community/react-native-linear-gradient",
+    "react-native-qrcode-svg": "^5.1.2",
+    "react-native-svg": "^9.2.4"
   },
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
