@@ -41,7 +41,12 @@
 		D7949E8119284103BF7DC4D0 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C02845D554E04CABBBE10FD8 /* libBVLinearGradient.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
-		F33DACF0222C125C0068A25A /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F31F2CD6222B86CE00F74BE2 /* libBVLinearGradient.a */; };
+		F33DACF2222C14460068A25A /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F31F2CD6222B86CE00F74BE2 /* libBVLinearGradient.a */; };
+		F33DACF3222C14A10068A25A /* libfishhook-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6861FA4F8DC00B85C8A /* libfishhook-tvOS.a */; };
+		F33DACF4222C14A10068A25A /* libjsi-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F31F2CCC222B86CD00F74BE2 /* libjsi-tvOS.a */; };
+		F33DACF5222C14A10068A25A /* libjsiexecutor-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F31F2CCE222B86CD00F74BE2 /* libjsiexecutor-tvOS.a */; };
+		F33DACF6222C14A10068A25A /* libjsinspector-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF0FFE12056DD460020B375 /* libjsinspector-tvOS.a */; };
+		F33DACF7222C14A10068A25A /* libRCTBlob-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -401,6 +406,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F33DACF3222C14A10068A25A /* libfishhook-tvOS.a in Frameworks */,
+				F33DACF4222C14A10068A25A /* libjsi-tvOS.a in Frameworks */,
+				F33DACF5222C14A10068A25A /* libjsiexecutor-tvOS.a in Frameworks */,
+				F33DACF6222C14A10068A25A /* libjsinspector-tvOS.a in Frameworks */,
+				F33DACF7222C14A10068A25A /* libRCTBlob-tvOS.a in Frameworks */,
 				ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */,
 				2D02E4C21E0B4AEC006451C7 /* libRCTAnimation.a in Frameworks */,
@@ -410,7 +420,7 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
-				F33DACF0222C125C0068A25A /* libBVLinearGradient.a in Frameworks */,
+				F33DACF2222C14460068A25A /* libBVLinearGradient.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1147,7 +1157,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1161,7 +1171,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

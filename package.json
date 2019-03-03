@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "16.6.3",
     "react-native": "0.58.6",
-    "react-native-linear-gradient": "^2.5.3"
+    "react-native-linear-gradient": "react-native-community/react-native-linear-gradient"
   },
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
