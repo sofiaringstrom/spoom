@@ -1,9 +1,14 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 const bgGradientOne = '#159957';
 const bgGradientTwo = '#155799';
+const width = Dimensions.get('window').width; //full width
+const height = Dimensions.get('window').height; //full height
 
 export default (styles = StyleSheet.create({
+  app: {
+    flex: 1
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -46,5 +51,8 @@ export default (styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 40,
+  },
+  animationContainer: {
+    flex: 1,
   }
 }));

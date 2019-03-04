@@ -1,9 +1,15 @@
 import openSocket from 'socket.io-client';
 
-const  socket = openSocket('http://localhost:7001');
+const socket = openSocket('http://localhost:7001');
 
-function subscribeToTimer(interval, cb) {
-  socket.on('timer', timestamp => cb(null, timestamp));
-  socket.emit('subscribeToTimer', interval);
-} 
-export { subscribeToTimer }
+function subscribeToCode(code, cb) {
+  socket.on('access_token', access_token => cb(null, access_token));
+  socket.emit('subscribeToCode', code);
+}
+
+function closeSocket() {
+  socket.close();
+  console.log('socket closed');
+}
+
+export { subscribeToCode, closeSocket }

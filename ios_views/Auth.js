@@ -1,12 +1,14 @@
 'use strict'
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { subscribeToTimer } from './swotify_api';
+import { subscribeToCode, closeSocket } from './swotify_api';
+import * as Animatable from 'react-native-animatable';
 
 const styles = require('./styles').default;
+
+var socketInterval;
 
 type Props = {};
 export default class Auth extends Component<Props> {
@@ -16,12 +18,31 @@ export default class Auth extends Component<Props> {
 
     this.state = ({
       code: this.generateCode(),
-      timestamp: 'no timestamp yet'
+      access_token: null
     })
 
-    subscribeToTimer(1000, (err, timestamp) => this.setState({ 
-      timestamp 
+    subscribeToCode(this.state.code, (err, access_token) => this.setState({ 
+      access_token 
     }));
+    
+  }
+
+  componentWillUnmount() {
+    closeSocket();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.access_token != prevState.access_token) {
+      console.log('got access token')
+      
+      AsyncStorage.setItem('access_token', this.state.access_token);
+
+      // visa dashboard
+      this.props.cb();
+
+      // connect to spotify
+
+    }
   }
 
   generateCode() {
@@ -33,7 +54,7 @@ export default class Auth extends Component<Props> {
     var url = `http://localhost:7000?code=${this.state.code}`;
 
     return (
-      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.container}>
+      <Animatable.View animation="fadeIn" duration={1000} style={styles.container}>
         <Text style={styles.title}>Swotify</Text>
 
         <Text style={styles.login}>Scan the code to sign in to Spotify</Text>
@@ -47,8 +68,9 @@ export default class Auth extends Component<Props> {
         
         <Text style={styles.description}>or go to http://localhost:7000 and enter {this.state.code}</Text>
 
-        <Text style={styles.description}>This is the timer value: {this.state.timestamp}</Text>
-      </LinearGradient>
+        <Text style={styles.description}>access_token: {this.state.access_token}</Text>
+
+      </Animatable.View>
     );
   }
 }
