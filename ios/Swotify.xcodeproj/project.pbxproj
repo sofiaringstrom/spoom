@@ -23,6 +23,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1EBFF8A1142349089996EC11 /* libRNExit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF1086C7B6848C0B14D04F5 /* libRNExit.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4C21E0B4AEC006451C7 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157351DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -47,7 +48,8 @@
 		F33DACF5222C14A10068A25A /* libjsiexecutor-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F31F2CCE222B86CD00F74BE2 /* libjsiexecutor-tvOS.a */; };
 		F33DACF6222C14A10068A25A /* libjsinspector-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DF0FFE12056DD460020B375 /* libjsinspector-tvOS.a */; };
 		F33DACF7222C14A10068A25A /* libRCTBlob-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */; };
-		F39F6958222D99DE00458869 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F39F6957222D99DD00458869 /* Images.xcassets */; };
+		F384ED92222DF08F00794442 /* libRNExit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F384ED91222DF06700794442 /* libRNExit.a */; };
+		F384ED93222DF33200794442 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F39F6957222D99DD00458869 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -352,6 +354,13 @@
 			remoteGlobalIDString = 94DDAC5C1F3D024300EED511;
 			remoteInfo = "RNSVG-tvOS";
 		};
+		F384ED90222DF06700794442 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1A3F72933004616A5345EF8 /* RNExit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNExit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -377,9 +386,11 @@
 		2D02E47B1E0B4A5D006451C7 /* Swotify-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swotify-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Swotify-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Swotify-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BF1086C7B6848C0B14D04F5 /* libRNExit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNExit.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A1A3F72933004616A5345EF8 /* RNExit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNExit.xcodeproj; path = "../node_modules/react-native-tv-exit/ios/RNExit.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B5E58182589C47E28C89D916 /* libRNSVG.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSVG.a; sourceTree = "<group>"; };
 		C02845D554E04CABBBE10FD8 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = "<group>"; };
@@ -418,6 +429,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				D7949E8119284103BF7DC4D0 /* libBVLinearGradient.a in Frameworks */,
 				05993C7A4B804A32BD54DCB0 /* libRNSVG.a in Frameworks */,
+				1EBFF8A1142349089996EC11 /* libRNExit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +437,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F384ED92222DF08F00794442 /* libRNExit.a in Frameworks */,
 				F33DACF3222C14A10068A25A /* libfishhook-tvOS.a in Frameworks */,
 				F33DACF4222C14A10068A25A /* libjsi-tvOS.a in Frameworks */,
 				F33DACF5222C14A10068A25A /* libjsiexecutor-tvOS.a in Frameworks */,
@@ -616,6 +629,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				25E07D2FF89C4B1D851311F0 /* BVLinearGradient.xcodeproj */,
 				E4A9D16EEBC54AF295BEF026 /* RNSVG.xcodeproj */,
+				A1A3F72933004616A5345EF8 /* RNExit.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -670,6 +684,7 @@
 				C02845D554E04CABBBE10FD8 /* libBVLinearGradient.a */,
 				B5E58182589C47E28C89D916 /* libRNSVG.a */,
 				DB9AD3E7DD024C0E8B16F16B /* libRNSVG-tvOS.a */,
+				4BF1086C7B6848C0B14D04F5 /* libRNExit.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -688,6 +703,14 @@
 			children = (
 				F33DAD34222C695B0068A25A /* libRNSVG.a */,
 				F33DAD36222C695B0068A25A /* libRNSVG-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F384ED8D222DF06700794442 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F384ED91222DF06700794442 /* libRNExit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -854,6 +877,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = F384ED8D222DF06700794442 /* Products */;
+					ProjectRef = A1A3F72933004616A5345EF8 /* RNExit.xcodeproj */;
 				},
 				{
 					ProductGroup = F33DAD08222C695B0068A25A /* Products */;
@@ -1158,6 +1185,13 @@
 			remoteRef = F33DAD35222C695B0068A25A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F384ED91222DF06700794442 /* libRNExit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNExit.a;
+			remoteRef = F384ED90222DF06700794442 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1173,7 +1207,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				F39F6958222D99DE00458869 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1181,6 +1214,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F384ED93222DF33200794442 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1299,12 +1333,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = SwotifyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1328,12 +1364,14 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = SwotifyTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1358,6 +1396,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = Swotify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1381,6 +1420,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = Swotify/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1398,7 +1438,7 @@
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1411,11 +1451,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = "Swotify-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1435,7 +1477,7 @@
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1448,11 +1490,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = "Swotify-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1484,11 +1528,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = "Swotify-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1520,11 +1566,13 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 				);
 				INFOPLIST_FILE = "Swotify-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

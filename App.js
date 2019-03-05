@@ -13,6 +13,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import Auth from './ios_views/Auth';
 import Dashboard from './ios_views/Dashboard';
 import Loader from './ios_views/Loader';
+import Exit from 'react-native-tv-exit';
+
+const TVEventHandler = require('TVEventHandler');
 
 const styles = require('./ios_views/styles').default;
 
@@ -20,6 +23,22 @@ const running_on_tv = Platform.isTV;
 
 type Props = {};
 export default class App extends Component<Props> {
+
+  _tvEventHandler: any;
+
+  _enableTVEventHandler() {
+    this._tvEventHandler = new TVEventHandler();
+    this._tvEventHandler.enable(this, function(cmp, evt) {
+
+      if (evt && evt.eventType === 'menu') {
+        Exit.exitApp();
+      }
+    });
+  }
+
+  componentDidMount() {
+    this._enableTVEventHandler();
+  }
 
   constructor(props) {
     super(props);

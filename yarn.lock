@@ -4717,6 +4717,11 @@ react-native-svg@^9.2.4:
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.2.4.tgz#a30ee42535b39097e7b68dfa6dcf5c1c8cce97f1"
   integrity sha512-Gox4iASgWpwgXpmaLgEvzwftjkrT8hIEnxnJvIypZaFlME9fdcgulv4AKcnwTFLxyIrbuuIaY1/GmbU4hejkjg==
 
+react-native-tv-exit@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-tv-exit/-/react-native-tv-exit-1.0.2.tgz#aa15ea9259ca6a65781e2f3cc3bbf2fb0448fbc4"
+  integrity sha512-bynrHkfkagq4Zgjhp4CuuMLjbU1dJozqk+zWTUPEhEWO31Zos0QBkPQLUF/Rk8tBiY643yMEG+NgzkkUFmeMuA==
+
 react-native@0.58.6:
   version "0.58.6"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.58.6.tgz#a6d273cd2f51b0e3b141dad5f19622e0000497b3"
