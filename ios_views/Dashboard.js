@@ -14,20 +14,28 @@ export default class Dashboard extends Component<Props> {
     super(props);
 
     this.state = ({
-      access_token: null
+      access_token: null,
+      refresh_token: null
     })
 
     AsyncStorage.getItem('access_token', (err, result) => this.setState({ 
-      access_token: result 
+      access_token: result
+    }));
+
+    AsyncStorage.getItem('refresh_token', (err, result) => this.setState({ 
+      refresh_token: result
     }));
   }
 
   componentDidMount() {
 
+    // call api and send tokens for spotify data
+
   }
 
   handlePress() {
     AsyncStorage.removeItem('access_token'); // reset auth
+    AsyncStorage.removeItem('refresh_token'); // reset auth
     this.props.cb();
   }
 
@@ -37,6 +45,7 @@ export default class Dashboard extends Component<Props> {
   
         <Text style={styles.title}>Swotify Dashboard</Text>
         <Text style={styles.description}>access_token: {this.state.access_token}</Text>
+        <Text style={styles.description}>refresh_token: {this.state.refresh_token}</Text>
 
         <Button text="Remove access_token" onPress={this.handlePress.bind(this)} />
 

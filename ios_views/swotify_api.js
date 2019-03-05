@@ -3,7 +3,7 @@ import openSocket from 'socket.io-client';
 const socket = openSocket('http://localhost:7001');
 
 function subscribeToCode(code, cb) {
-  socket.on('access_token', access_token => cb(null, access_token));
+  socket.on('authData', authData => cb(null, authData));
   socket.emit('subscribeToCode', code);
 }
 
