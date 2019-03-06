@@ -14,7 +14,6 @@ Select Swotify-tvOS -> Apple TV
 
 Run
 
-
 ### Pairing an Apple TV with Xcode
 
 Ensure your Mac and Apple TV are connected to the same network.
