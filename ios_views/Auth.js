@@ -19,12 +19,14 @@ export default class Auth extends Component<Props> {
     this.state = ({
       code: this.generateCode(),
       access_token: null,
-      refresh_token: null
+      refresh_token: null,
+      createdAt: null
     })
 
     subscribeToCode(this.state.code, (err, authData) => this.setState({ 
       access_token: authData['access_token'],
-      refresh_token: authData['refresh_token'] 
+      refresh_token: authData['refresh_token'],
+      createdAt: authData['createdAt']
     }));
 
   }
@@ -39,6 +41,7 @@ export default class Auth extends Component<Props> {
       
       AsyncStorage.setItem('access_token', this.state.access_token);
       AsyncStorage.setItem('refresh_token', this.state.refresh_token);
+      AsyncStorage.setItem('createdAt', this.state.createdAt);
 
       // visa dashboard
       this.props.cb();
