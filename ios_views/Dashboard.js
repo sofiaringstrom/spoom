@@ -3,9 +3,13 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage, Image} from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
+import Loader from './Loader';
 import Button from './Button';
 
 const styles = require('./styles').default;
+
+const imgPlaceholder = require('../assets/ghost.png');
 
 type Props = {};
 export default class Dashboard extends Component<Props> {
@@ -20,40 +24,43 @@ export default class Dashboard extends Component<Props> {
       spotifyData: null
     })
 
-    AsyncStorage.getItem('access_token', (err, result) => this.setState({ 
-      access_token: result
-    }));
-
-    AsyncStorage.getItem('refresh_token', (err, result) => this.setState({ 
-      refresh_token: result
-    }));
-
-    AsyncStorage.getItem('createdAt', (err, result) => this.setState({ 
-      createdAt: result
+    AsyncStorage.multiGet(['access_token', 'refresh_token', 'createdAt'], (err, result) => this.setState({
+      access_token: result[0][1],
+      refresh_token: result[1][1],
+      createdAt: result[2][1]
     }));
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps, prevState) {
 
-  }
+    // if received access_token, fetch data
+    if (!prevState.access_token) {
+      this.getUserData();
+    }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.createdAt != this.state.createdAt) { // wait for last parameter
-      // call api and send tokens for spotify data
-      this.getUserData(nextState.createdAt);
+    // if received new token in state
+    if (prevState.access_token != this.state.access_token && prevState.createdAt != this.state.createdAt) {
+      AsyncStorage.setItem('access_token', this.state.access_token);
+      AsyncStorage.setItem('createdAt', this.state.createdAt);
     }
   }
 
   async getUserData(createdAt) {
     try {
       let response = await fetch(
-        'http://localhost:7000/api/v1/getUserData?access_token=' + this.state.access_token + '&refresh_token=' + this.state.refresh_token + '&createdAt=' + createdAt,
+        'http://localhost:7000/api/v1/getUserData?access_token=' + this.state.access_token + '&refresh_token=' + this.state.refresh_token + '&createdAt=' + this.state.createdAt,
       );
       let responseJson = await response.json();
-      console.log(responseJson.newAuthData.createdAt)
       if (responseJson.newAuthData.createdAt) {
         // new tokens
+        console.log('new token')
+        this.setState({
+          spotifyData: responseJson.data,
+          access_token: responseJson.newAuthData.access_token,
+          createdAt: responseJson.newAuthData.createdAt
+        })
       } else {
+        console.log('same token')
         this.setState({
           spotifyData: responseJson.data
         });
@@ -64,9 +71,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   handlePress() {
-    AsyncStorage.removeItem('access_token'); // reset auth
-    AsyncStorage.removeItem('refresh_token'); // reset auth
-    AsyncStorage.removeItem('createdAt');
+    AsyncStorage.clear();
     this.props.cb();
   }
 
@@ -74,26 +79,31 @@ export default class Dashboard extends Component<Props> {
 
     console.log(this.state.spotifyData)
 
-    var userImage = this.state.spotifyData ? this.state.spotifyData['images'][0]['url'] : '';
+    if (!this.state.spotifyData) {
+      return (
+        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
+          <Loader />
+        </LinearGradient>
+      );
+    } else {
+      return (
+        <Animatable.View animation="fadeIn" duration={1000} style={styles.container}>
+    
+          <Text style={styles.title}>Swotify Dashboard</Text>
+          {/*<Text style={styles.description}>access_token: {this.state.access_token}</Text>
+          <Text style={styles.description}>refresh_token: {this.state.refresh_token}</Text>
+          <Text style={styles.description}>createdAt: {this.state.createdAt}</Text>*/}
+          
+          {this.state.spotifyData ? <Image style={{width: 100, height: 100, borderRadius: 50}} source={{uri: this.state.spotifyData['images'][0]['url']}} /> : null}
+          
+          <Text style={styles.description}>Hi {this.state.spotifyData ? this.state.spotifyData['display_name'] : ''}!</Text>
 
-    return (
-      <Animatable.View animation="fadeIn" duration={1000} style={styles.container}>
-  
-        <Text style={styles.title}>Swotify Dashboard</Text>
-        {/*<Text style={styles.description}>access_token: {this.state.access_token}</Text>
-        <Text style={styles.description}>refresh_token: {this.state.refresh_token}</Text>
-        <Text style={styles.description}>createdAt: {this.state.createdAt}</Text>*/}
-        <Image
-          style={{width: 200, height: 200, borderRadius: 100}}
-          source={{uri: userImage}}
-        />
-        <Text style={styles.description}>Hi {this.state.spotifyData ? this.state.spotifyData['display_name'] : ''}!</Text>
+          <Button text="Remove access_token" onPress={this.handlePress.bind(this)} />
 
-        <Button text="Remove access_token" onPress={this.handlePress.bind(this)} />
+          <Button text="Button" onPress={console.log('button')} />
 
-        <Button text="Button" onPress={console.log('button')} />
-
-      </Animatable.View>
-    );
+        </Animatable.View>
+      );
+    }
   }
 }

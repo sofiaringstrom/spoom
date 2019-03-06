@@ -8,18 +8,22 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TabBarIOS, AsyncStorage} from 'react-native';
+import {Platform, StyleSheet, Text, View, TabBarIOS, AsyncStorage, Dimensions, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Auth from './ios_views/Auth';
 import Dashboard from './ios_views/Dashboard';
 import Loader from './ios_views/Loader';
 import Exit from 'react-native-tv-exit';
+import { checkServerStatus } from './ios_views/swotify_api';
 
 const TVEventHandler = require('TVEventHandler');
 
 const styles = require('./ios_views/styles').default;
+const width = Dimensions.get('window').width; //full width
 
 const running_on_tv = Platform.isTV;
+
+const imgSadMac = require('./assets/sad_mac.png');
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -36,21 +40,38 @@ export default class App extends Component<Props> {
     });
   }
 
-  componentDidMount() {
-    this._enableTVEventHandler();
-  }
-
   constructor(props) {
     super(props);
 
     this.state = ({
-      authorized: null
+      authorized: null,
+      serverStatus: null
     });
 
-    //AsyncStorage.removeItem('access_token'); // reset auth
+    //AsyncStorage.clear(); // reset auth
+  }
 
-    //setTimeout(() => this.checkUserSignedIn(), 2000);
-    this.checkUserSignedIn();
+  componentDidMount() {
+    this._enableTVEventHandler();
+
+    console.log('componentDidMount')
+    this.checkServer();
+  }
+
+  checkServer() {
+    console.log('checkServer')
+    checkServerStatus((status) => {
+      console.log('checkServerStatus cb')
+      if (status === 'down') {
+        console.log('server is down')
+        this.setState({
+          serverStatus: "Could not connect to server, trying to reconnect...\n\nIf this screen doesn't change soon there's a chance the server is down.\nPlease come back and check later."
+        })
+      } else if (status === 'up') {
+        console.log('server is up')
+        this.handleAuth();
+      }
+    });
   }
 
   async checkUserSignedIn() {
@@ -87,21 +108,32 @@ export default class App extends Component<Props> {
 
   handleAuth() {
     this.setState({
-      authorized: null
+      authorized: null,
+      serverStatus: null
     });
     this.checkUserSignedIn();
   }
 
   render() {
-    
-    console.log(this.state.authorized)
 
     var notAuth = (!this.state.authorized ? <Loader /> : <Auth cb={this.handleAuth.bind(this)} />);
 
-    return (
-      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
-        {this.state.authorized == 'true' ? <Dashboard cb={this.handleAuth.bind(this)} /> : notAuth}
-      </LinearGradient>
-    );
+    if (this.state.serverStatus) {
+      return (
+        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
+          <View style={{ width: width, flex: 1, justifyContent: 'center', alignItems: 'center',}}>
+            <Text style={styles.title}>Swotify</Text>
+            <Image style={{width: 120, height: 150}} resizeMode="contain" source={imgSadMac} />
+            <Text style={styles.description}>{this.state.serverStatus}</Text>
+          </View>
+        </LinearGradient>
+      );
+    } else {
+      return (
+        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
+          {this.state.authorized == 'true' ? <Dashboard cb={this.handleAuth.bind(this)} /> : notAuth}
+        </LinearGradient>
+      );
+    }
   }
 }

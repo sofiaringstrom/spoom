@@ -12,4 +12,10 @@ function closeSocket() {
   console.log('socket closed');
 }
 
-export { subscribeToCode, closeSocket }
+function checkServerStatus(cb) {
+  socket.on('connect', () => cb('up'));
+  socket.on('connect_error', () => cb('down'));
+  
+}
+
+export { subscribeToCode, closeSocket, checkServerStatus }
