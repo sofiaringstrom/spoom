@@ -40,14 +40,14 @@ export default class Dashboard extends Component<Props> {
   componentWillUpdate(nextProps, nextState) {
     if (nextState.createdAt != this.state.createdAt) { // wait for last parameter
       // call api and send tokens for spotify data
-      this.getUserData();
+      this.getUserData(nextState.createdAt);
     }
   }
 
-  async getUserData() {
+  async getUserData(createdAt) {
     try {
       let response = await fetch(
-        'http://localhost:7000/api/v1/getUserData?access_token=' + this.state.access_token + '&refresh_token=' + this.state.refresh_token + '&createdAt=' + this.state.createdAt,
+        'http://localhost:7000/api/v1/getUserData?access_token=' + this.state.access_token + '&refresh_token=' + this.state.refresh_token + '&createdAt=' + createdAt,
       );
       let responseJson = await response.json();
       console.log(responseJson.newAuthData.createdAt)
