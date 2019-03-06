@@ -57,7 +57,7 @@ export default class Auth extends Component<Props> {
 
   render() {
 
-    var url = `http://localhost:7000?code=${this.state.code}`;
+    var url = `https://swotify-api.herokuapp.com?code=${this.state.code}`;
 
     return (
       <Animatable.View animation="fadeIn" duration={1000} style={styles.container}>
@@ -72,7 +72,7 @@ export default class Auth extends Component<Props> {
           />
         </View>
         
-        <Text style={styles.description}>or go to http://localhost:7000 and enter {this.state.code}</Text>
+        <Text style={styles.description}>or go to https://swotify-api.herokuapp.com and enter {this.state.code}</Text>
 
         <Text style={styles.description}>access_token: {this.state.access_token}</Text>
 

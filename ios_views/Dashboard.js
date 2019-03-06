@@ -48,7 +48,7 @@ export default class Dashboard extends Component<Props> {
   async getUserData(createdAt) {
     try {
       let response = await fetch(
-        'http://localhost:7000/api/v1/getUserData?access_token=' + this.state.access_token + '&refresh_token=' + this.state.refresh_token + '&createdAt=' + this.state.createdAt,
+        'https://swotify-api.herokuapp.com/api/v1/getUserData?access_token=' + this.state.access_token + '&refresh_token=' + this.state.refresh_token + '&createdAt=' + this.state.createdAt,
       );
       let responseJson = await response.json();
       if (responseJson.newAuthData.createdAt) {

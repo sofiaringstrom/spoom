@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://localhost:7001');
+const socket = openSocket('https://swotify-api.herokuapp.com');
 
 function subscribeToCode(code, cb) {
   socket.on('authData', authData => cb(null, authData));
