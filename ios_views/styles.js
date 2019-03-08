@@ -14,6 +14,23 @@ export default (styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  containerSplit: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  containerLeft: {
+    width: width/2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerRight: {
+    width: width/2
+  },
+  containerPlayer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   title: {
     fontSize: 70,
     color: '#fff',

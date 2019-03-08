@@ -7,14 +7,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import Loader from './Loader';
 import Button from './Button';
 import { API_URI } from 'react-native-dotenv';
-import Player from './Player';
+import { initSpotify, playSpotify } from './swotify_api';
 
 const styles = require('./styles').default;
 
-const imgPlaceholder = require('../assets/ghost.png');
-
 type Props = {};
-export default class Dashboard extends Component<Props> {
+export default class Player extends Component<Props> {
 
   constructor(props) {
     super(props);
@@ -23,13 +21,13 @@ export default class Dashboard extends Component<Props> {
       access_token: null,
       refresh_token: null,
       createdAt: null,
-      spotifyUserData: null
     })
 
     AsyncStorage.multiGet(['access_token', 'refresh_token', 'createdAt'], (err, result) => this.setState({
       access_token: result[0][1],
       refresh_token: result[1][1],
-      createdAt: result[2][1]
+      createdAt: result[2][1],
+      spotifyData: null
     }));
   }
 
@@ -37,7 +35,15 @@ export default class Dashboard extends Component<Props> {
 
     // if received access_token, fetch data
     if (!prevState.access_token && this.state.access_token) {
-      this.getUserData();
+      this.getSpotifyPlayer();
+
+      initSpotify(this.state.access_token, (err, response) => { 
+        console.log(response)
+      });
+
+      playSpotify(() => {
+        console.log('called play')
+      });
     }
 
     // if received new token in state
@@ -47,24 +53,27 @@ export default class Dashboard extends Component<Props> {
     }
   }
 
-  async getUserData(createdAt) {
+  async getSpotifyPlayer() {
     try {
       let response = await fetch(
-        `${API_URI}/api/v1/getUserData?access_token=${this.state.access_token}&refresh_token=${this.state.refresh_token}&createdAt=${this.state.createdAt}`,
+        `${API_URI}/api/v1/getPlayer?access_token=${this.state.access_token}&refresh_token=${this.state.refresh_token}&createdAt=${this.state.createdAt}`,
       );
       let responseJson = await response.json();
       if (responseJson.newAuthData.createdAt) {
         // new tokens
         console.log('new token')
+
+        console.log(responseJson.player)
+
         this.setState({
-          spotifyUserData: responseJson.data,
           access_token: responseJson.newAuthData.access_token,
-          createdAt: responseJson.newAuthData.createdAt
+          createdAt: responseJson.newAuthData.createdAt,
+          spotifyData: responseJson.data
         })
       } else {
         console.log('same token')
         this.setState({
-          spotifyUserData: responseJson.data
+          spotifyData: responseJson.data
         });
       }
     } catch (error) {
@@ -72,16 +81,11 @@ export default class Dashboard extends Component<Props> {
     }
   }
 
-  handlePress() {
-    AsyncStorage.clear();
-    this.props.cb();
-  }
-
   render() {
 
-    console.log(this.state.spotifyUserData)
+    //console.log(this.state.spotifyData)
 
-    if (!this.state.spotifyUserData) {
+    if (!this.state.spotifyData) {
       return (
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
           <Loader />
@@ -89,26 +93,15 @@ export default class Dashboard extends Component<Props> {
       );
     } else {
       return (
-        <Animatable.View animation="fadeIn" duration={1000} style={styles.containerSplit}>
-        
-          <View style={styles.containerLeft}>
-            <Text style={styles.title}>Swotify Dashboard</Text>
-            {/*<Text style={styles.description}>access_token: {this.state.access_token}</Text>
-            <Text style={styles.description}>refresh_token: {this.state.refresh_token}</Text>
-            <Text style={styles.description}>createdAt: {this.state.createdAt}</Text>*/}
-            
-            {this.state.spotifyUserData && this.state.spotifyUserData['images'] ? <Image style={{width: 100, height: 100, borderRadius: 50}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : null}
-            
-            <Text style={styles.description}>Hi {this.state.spotifyUserData ? this.state.spotifyUserData['display_name'] : ''}!</Text>
+        <Animatable.View animation="fadeIn" duration={1000} style={styles.containerPlayer}>
+    
+          <Text style={styles.description}>Player</Text>
 
-            <Button text="Remove access_token" onPress={this.handlePress.bind(this)} />
+          {/*<Image style={{width: 300, height: 300}} source={{uri: this.state.spotifyData['item']['album']['images'][1]['url']}} />*/}
+          
+          <Text style={styles.description}>låtnamn</Text>
 
-            <Button text="Button" onPress={console.log('button')} />
-          </View>
-
-          <View style={styles.containerRight}>
-            <Player />
-          </View>
+          <Text style={styles.description}>artist</Text>
 
         </Animatable.View>
       );
