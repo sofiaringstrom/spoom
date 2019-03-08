@@ -5,6 +5,7 @@ import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncSt
 import QRCode from 'react-native-qrcode-svg';
 import { subscribeToCode, closeSocket } from './swotify_api';
 import * as Animatable from 'react-native-animatable';
+import { API_URI } from 'react-native-dotenv';
 
 const styles = require('./styles').default;
 
@@ -45,9 +46,6 @@ export default class Auth extends Component<Props> {
 
       // visa dashboard
       this.props.cb();
-
-      // connect to spotify
-
     }
   }
 
@@ -57,7 +55,7 @@ export default class Auth extends Component<Props> {
 
   render() {
 
-    var url = `https://swotify-api.herokuapp.com?code=${this.state.code}`;
+    var url = `${API_URI}?code=${this.state.code}`;
 
     return (
       <Animatable.View animation="fadeIn" duration={1000} style={styles.container}>

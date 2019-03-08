@@ -6,6 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import Loader from './Loader';
 import Button from './Button';
+import { API_URI } from 'react-native-dotenv';
 
 const styles = require('./styles').default;
 
@@ -21,7 +22,7 @@ export default class Dashboard extends Component<Props> {
       access_token: null,
       refresh_token: null,
       createdAt: null,
-      spotifyData: null
+      spotifyUserData: null
     })
 
     AsyncStorage.multiGet(['access_token', 'refresh_token', 'createdAt'], (err, result) => this.setState({
@@ -48,25 +49,48 @@ export default class Dashboard extends Component<Props> {
   async getUserData(createdAt) {
     try {
       let response = await fetch(
-        'https://swotify-api.herokuapp.com/api/v1/getUserData?access_token=' + this.state.access_token + '&refresh_token=' + this.state.refresh_token + '&createdAt=' + this.state.createdAt,
+        `${API_URI}/api/v1/getUserData?access_token=${this.state.access_token}&refresh_token=${this.state.refresh_token}&createdAt=${this.state.createdAt}`,
       );
       let responseJson = await response.json();
       if (responseJson.newAuthData.createdAt) {
         // new tokens
         console.log('new token')
         this.setState({
-          spotifyData: responseJson.data,
+          spotifyUserData: responseJson.data,
           access_token: responseJson.newAuthData.access_token,
           createdAt: responseJson.newAuthData.createdAt
         })
       } else {
         console.log('same token')
         this.setState({
-          spotifyData: responseJson.data
+          spotifyUserData: responseJson.data
         });
       }
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async getSpotifyPlayer() {
+    try {
+      let response = await fetch(
+        ${API_URI}/api/v1/getPlayer/?access_token=${this.state.access_token}&refresh_token=${this.state.refresh_token}&createdAt=${this.state.createdAt}`,
+      );
+      let responseJson = await response.json();
+      if (responseJson.newAuthData.createdAt) {
+        // new token
+        console.log('new token')
+        console.log(responseJson.player)
+        this.setState({
+          access_token: responseJson.newAuthData.access_token,
+          createdAt: responseJson.newAuthData.createdAt
+        })
+      } else {
+        console.log('same token')
+        console.log(responseJson.player)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -77,9 +101,9 @@ export default class Dashboard extends Component<Props> {
 
   render() {
 
-    console.log(this.state.spotifyData)
+    console.log(this.state.spotifyUserData)
 
-    if (!this.state.spotifyData) {
+    if (!this.state.spotifyUserData) {
       return (
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
           <Loader />
@@ -94,9 +118,9 @@ export default class Dashboard extends Component<Props> {
           <Text style={styles.description}>refresh_token: {this.state.refresh_token}</Text>
           <Text style={styles.description}>createdAt: {this.state.createdAt}</Text>*/}
           
-          {this.state.spotifyData ? <Image style={{width: 100, height: 100, borderRadius: 50}} source={{uri: this.state.spotifyData['images'][0]['url']}} /> : null}
+          {this.state.spotifyUserData ? <Image style={{width: 100, height: 100, borderRadius: 50}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : null}
           
-          <Text style={styles.description}>Hi {this.state.spotifyData ? this.state.spotifyData['display_name'] : ''}!</Text>
+          <Text style={styles.description}>Hi {this.state.spotifyUserData ? this.state.spotifyUserData['display_name'] : ''}!</Text>
 
           <Button text="Remove access_token" onPress={this.handlePress.bind(this)} />
 
