@@ -7,7 +7,8 @@ const height = Dimensions.get('window').height; //full height
 
 export default (styles = StyleSheet.create({
   app: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#191414'
   },
   container: {
     flex: 1,
@@ -16,20 +17,26 @@ export default (styles = StyleSheet.create({
   },
   containerSplit: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'column'
   },
-  containerLeft: {
-    width: width/2,
-    justifyContent: 'center',
-    alignItems: 'center',
+  containerTop: {
+    width: width,
+    height: 200,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    /*justifyContent: 'center',
+    alignItems: 'center',*/
   },
-  containerRight: {
-    width: width/2
+  containerBottom: {
+    width: width,
+    flex: 1,
+    alignSelf: 'stretch'
   },
   containerPlayer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
+  },
+  backgroundImagePlayer: {
+    flex: 1
   },
   title: {
     fontSize: 70,

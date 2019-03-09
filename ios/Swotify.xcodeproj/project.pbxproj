@@ -1481,6 +1481,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios",
 					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/react-native-progress",
 				);
 				INFOPLIST_FILE = "Swotify-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1525,6 +1526,7 @@
 					"$(SRCROOT)/../node_modules/react-native-svg/ios",
 					"$(SRCROOT)/../node_modules/react-native-tv-exit/ios",
 					"$(SRCROOT)/../node_modules/rn-spotify-sdk/ios",
+					"$(SRCROOT)/../node_modules/react-native-progress",
 				);
 				INFOPLIST_FILE = "Swotify-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

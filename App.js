@@ -130,9 +130,9 @@ export default class App extends Component<Props> {
       );
     } else {
       return (
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
+        <View style={styles.app}>
           {this.state.authorized == 'true' ? <Dashboard cb={this.handleAuth.bind(this)} /> : notAuth}
-        </LinearGradient>
+        </View>
       );
     }
   }

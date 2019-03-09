@@ -25,7 +25,9 @@ export default class Dashboard extends Component<Props> {
       createdAt: null,
       spotifyUserData: null
     })
+  }
 
+  componentDidMount() {
     AsyncStorage.multiGet(['access_token', 'refresh_token', 'createdAt'], (err, result) => this.setState({
       access_token: result[0][1],
       refresh_token: result[1][1],
@@ -79,8 +81,6 @@ export default class Dashboard extends Component<Props> {
 
   render() {
 
-    console.log(this.state.spotifyUserData)
-
     if (!this.state.spotifyUserData) {
       return (
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
@@ -91,11 +91,8 @@ export default class Dashboard extends Component<Props> {
       return (
         <Animatable.View animation="fadeIn" duration={1000} style={styles.containerSplit}>
         
-          <View style={styles.containerLeft}>
+          <View style={styles.containerTop}>
             <Text style={styles.title}>Swotify Dashboard</Text>
-            {/*<Text style={styles.description}>access_token: {this.state.access_token}</Text>
-            <Text style={styles.description}>refresh_token: {this.state.refresh_token}</Text>
-            <Text style={styles.description}>createdAt: {this.state.createdAt}</Text>*/}
             
             {this.state.spotifyUserData && this.state.spotifyUserData['images'] ? <Image style={{width: 100, height: 100, borderRadius: 50}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : null}
             
@@ -106,7 +103,7 @@ export default class Dashboard extends Component<Props> {
             <Button text="Button" onPress={console.log('button')} />
           </View>
 
-          <View style={styles.containerRight}>
+          <View style={styles.containerBottom}>
             <Player />
           </View>
 
