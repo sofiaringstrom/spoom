@@ -82,9 +82,6 @@ export default class Button extends Component<Props> {
   render() {
     return (
       <TouchableHighlight
-        style={{
-          marginTop: 20
-        }}
         onPress={this.handleButtonPress.bind(this)}
         onFocus={this.handleButtonFocus.bind(this)}
         onBlur={this.handleButtonBlur.bind(this)}

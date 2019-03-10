@@ -23,9 +23,10 @@ export default (styles = StyleSheet.create({
     width: width,
     height: 200,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    /*justifyContent: 'center',
-    alignItems: 'center',*/
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 100,
+    paddingRight: 100
   },
   containerBottom: {
     width: width,
@@ -55,6 +56,10 @@ export default (styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     marginTop: 40
+  },
+  userText: {
+   fontSize: 30,
+    color: '#fff',
   },
   loginInput: {
     height: 80,

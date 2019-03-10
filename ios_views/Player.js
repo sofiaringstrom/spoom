@@ -83,7 +83,6 @@ export default class Player extends Component<Props> {
       let responseJson = await response.json();
       // new token
       console.log('new access_token token')
-      console.log('responseJson', responseJson)
       this.setState({
         access_token: responseJson.newAuthData.access_token,
         createdAt: responseJson.newAuthData.createdAt

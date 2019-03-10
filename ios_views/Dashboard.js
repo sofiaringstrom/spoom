@@ -1,7 +1,15 @@
 'use strict'
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage, Image} from 'react-native';
+import {Platform, 
+  StyleSheet, 
+  Text, 
+  View, 
+  TextInput, 
+  TouchableHighlight, 
+  AsyncStorage, 
+  Image, 
+  AlertIOS} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import Loader from './Loader';
@@ -10,8 +18,6 @@ import { API_URI } from 'react-native-dotenv';
 import Player from './Player';
 
 const styles = require('./styles').default;
-
-const imgPlaceholder = require('../assets/ghost.png');
 
 type Props = {};
 export default class Dashboard extends Component<Props> {
@@ -74,12 +80,36 @@ export default class Dashboard extends Component<Props> {
     }
   }
 
-  handlePress() {
+  handleSettingsPress() {
+    AlertIOS.alert(
+      'Settings',
+      '',
+      [
+        {
+          text: 'Sign out',
+          onPress: () => this.signOut.bind(this),
+        },
+        {
+          text: 'Info',
+          onPress: () => console.log('info Pressed'),
+        },
+        {
+          text: 'Close',
+          onPress: () => console.log('close Pressed'),
+          style: 'cancel',
+        },
+      ],
+    );
+  }
+
+  signOut() {
     AsyncStorage.clear();
     this.props.cb();
   }
 
   render() {
+
+    console.log('this.state.spotifyUserData', this.state.spotifyUserData)
 
     if (!this.state.spotifyUserData) {
       return (
@@ -92,15 +122,25 @@ export default class Dashboard extends Component<Props> {
         <Animatable.View animation="fadeIn" duration={1000} style={styles.containerSplit}>
         
           <View style={styles.containerTop}>
-            <Text style={styles.title}>Swotify Dashboard</Text>
-            
-            {this.state.spotifyUserData && this.state.spotifyUserData['images'] ? <Image style={{width: 100, height: 100, borderRadius: 50}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : null}
-            
-            <Text style={styles.description}>Hi {this.state.spotifyUserData ? this.state.spotifyUserData['display_name'] : ''}!</Text>
 
-            <Button text="Remove access_token" onPress={this.handlePress.bind(this)} />
+            <TouchableHighlight>
 
-            <Button text="Button" onPress={console.log('button')} />
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            
+                {this.state.spotifyUserData && this.state.spotifyUserData['images'] ? <Image style={{width: 100, height: 100, borderRadius: 50, marginRight: 30}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : null}
+                
+                <Text style={styles.userText}>Hi {this.state.spotifyUserData ? this.state.spotifyUserData['display_name'] : this.state.spotifyUserData['username']}!</Text>
+
+              </View>
+
+            </TouchableHighlight>
+
+            {/*<Button text="Remove access_token" onPress={this.handlePress.bind(this)} />
+
+            <Button text="Button" onPress={console.log('button')} />*/}
+
+            <Button text="Settings" onPress={this.handleSettingsPress.bind(this)} />
+
           </View>
 
           <View style={styles.containerBottom}>
