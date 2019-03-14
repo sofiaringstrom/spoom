@@ -57,6 +57,18 @@ export default (styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40
   },
+  trackName: {
+    fontSize: 30,
+    color: '#fff',
+    textAlign: 'center',
+    marginTop: 20
+  },
+  artist: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'center',
+    marginTop: 10
+  },
   userText: {
    fontSize: 30,
     color: '#fff',

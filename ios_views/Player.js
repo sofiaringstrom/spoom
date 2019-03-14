@@ -19,10 +19,59 @@ import { API_URI } from 'react-native-dotenv';
 import { playerSocket } from './swotify_api';
 import * as Progress from 'react-native-progress';
 
+var TVEventHandler = require('TVEventHandler');
+
 const styles = require('./styles').default;
+
+const pauseImg = require('../assets/icons8-pause-button-filled-50.png');
+const prevImg = require('../assets/icons8-skip-to-start-filled-50.png');
+const nextImg = require('../assets/icons8-end-filled-50.png');
+const plsyImg = require('../assets/icons8-circled-play-filled-50.png');
+
+const btnDefault = {
+  from: {
+    scale: 0.8,
+  },
+  to: {
+    scale: 0.8,
+  },
+};
+
+const btnFocus = {
+  from: {
+    scale: 0.8,
+  },
+  to: {
+    scale: 1,
+  },
+};
+
+const btnBlur = {
+  from: {
+    scale: 1,
+  },
+  to: {
+    scale: 0.8,
+  },
+};
 
 type Props = {};
 export default class Player extends Component<Props> {
+
+  _tvEventHandler: any;
+
+  _enableTVEventHandler() {
+    this._tvEventHandler = new TVEventHandler();
+    this._tvEventHandler.enable(this, (cmp, evt) => {
+      if(evt && evt.eventType === 'down') {
+        console.log('down')
+        console.log(this.playPause)
+        // set focus to play/paus
+        //this.refs[playPause].focus();
+        this.playPause.setNativeProps({ hasTVPreferredFocus: true });
+      }
+    });
+  }
 
   constructor(props) {
     super(props);
@@ -31,10 +80,15 @@ export default class Player extends Component<Props> {
       access_token: null,
       refresh_token: null,
       createdAt: null,
+      btnPrevAnimation: btnDefault,
+      btnPlayPauseAnimation: btnDefault,
+      btnNextAnimation: btnDefault
     })
   }
 
   componentDidMount() {
+    this._enableTVEventHandler();
+
     AsyncStorage.multiGet(['access_token', 'refresh_token', 'createdAt'], (err, result) => this.setState({
       access_token: result[0][1],
       refresh_token: result[1][1],
@@ -59,12 +113,45 @@ export default class Player extends Component<Props> {
     if (this.state.access_token) {
       // request new token if current is expiring
       var tokenTimePassed = this.checkToken(this.state.createdAt);
-      console.log('time passed on token:', tokenTimePassed)
+      //console.log('time passed on token:', tokenTimePassed)
       if (tokenTimePassed >= 59) {
         this.getNewToken();
       }
     }
 
+  }
+
+  handleButtonFocus(name) {
+    console.log('focus', name)
+    if (name === 'playPause') {
+      this.setState({
+        btnPlayPauseAnimation: btnFocus
+      });
+    } else if (name === 'prev') {
+      this.setState({
+        btnPrevAnimation: btnFocus
+      });
+    } else if (name === 'next') {
+      this.setState({
+        btnNextAnimation: btnFocus
+      });
+    }
+  }
+
+  handleButtonBlur(name) {
+    if (name === 'playPause') {
+      this.setState({
+        btnPlayPauseAnimation: btnBlur
+      });
+    } else if (name === 'prev') {
+      this.setState({
+        btnPrevAnimation: btnBlur
+      });
+    } else if (name === 'next') {
+      this.setState({
+        btnNextAnimation: btnBlur
+      });
+    }
   }
 
   checkToken(createdAt) {
@@ -187,14 +274,54 @@ export default class Player extends Component<Props> {
       return (
         <Animatable.View animation="fadeIn" duration={1000} style={styles.containerPlayer}>
           <ImageBackground resizeMode={'cover'} style={styles.backgroundImagePlayer} blurRadius={20} source={activeTrack ? {uri: activeTrack.album.images[0].url} : {uri: "https://placeimg.com/300/300/any"}} >
-            <View style={{backgroundColor: 'rgba(25,20,20, 0.2)', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{backgroundColor: 'rgba(25,20,20, 0.5)', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
               <Image style={{width: 300, height: 300}} source={activeTrack ? {uri: activeTrack.album.images[0].url} : {uri: "https://placeimg.com/300/300/any"}} />
               
-              <Text style={styles.description}>{activeTrack ? activeTrack.name : ''}</Text>
+              <Text style={styles.trackName}>{activeTrack ? activeTrack.name : ''}</Text>
 
-              <Text style={styles.description}>{activeTrack ? activeTrack.artists[0].name : ''}</Text>
+              <Text style={styles.artist}>{activeTrack ? activeTrack.artists[0].name : ''}</Text>
 
-              <Progress.Bar progress={this.state.progressPercentTest} color={'white'} unfilledColor={'rgba(25,20,20, 0.5)'} borderWidth={0} width={600} height={10} />
+              <View style={{flexDirection: 'row', marginTop: 20, width: 200, justifyContent: 'space-between'}}>
+
+                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'prev')} onBlur={this.handleButtonBlur.bind(this, 'prev')}>
+                  <Animatable.View 
+                    animation={this.state.btnPrevAnimation}
+                    duration={200}
+                    style={{
+                      flex: -1,
+                      alignItems: 'center',
+                    }}>
+                    <Image style={{}} source={prevImg} width={60} height={60} />
+                  </Animatable.View>
+                </TouchableHighlight>
+
+                <TouchableHighlight ref={ref => {this.playPause = ref; }} onFocus={this.handleButtonFocus.bind(this, 'playPause')} onBlur={this.handleButtonBlur.bind(this, 'playPause')}>
+                  <Animatable.View 
+                    animation={this.state.btnPlayPauseAnimation}
+                    duration={200}
+                    style={{
+                      flex: -1,
+                      alignItems: 'center'
+                    }}>
+                    <Image style={{}} source={pauseImg} width={60} height={60} />
+                  </Animatable.View>
+                </TouchableHighlight>
+
+                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'next')} onBlur={this.handleButtonBlur.bind(this, 'next')}>
+                  <Animatable.View 
+                    animation={this.state.btnNextAnimation}
+                    duration={200}
+                    style={{
+                      flex: -1,
+                      alignItems: 'center'
+                    }}>
+                    <Image style={{}} source={nextImg} width={60} height={60} />
+                  </Animatable.View>
+                </TouchableHighlight>
+
+              </View>
+
+              <Progress.Bar style={{marginTop: 20}} progress={this.state.progressPercentTest} color={'white'} unfilledColor={'rgba(25,20,20, 0.5)'} borderWidth={0} width={500} height={10} />
 
             </View>
           </ImageBackground>

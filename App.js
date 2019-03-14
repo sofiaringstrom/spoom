@@ -120,13 +120,13 @@ export default class App extends Component<Props> {
 
     if (this.state.serverStatus) {
       return (
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
+        <View style={styles.app}>
           <View style={{ width: width, flex: 1, justifyContent: 'center', alignItems: 'center',}}>
             <Text style={styles.title}>Swotify</Text>
             <Image style={{width: 120, height: 150}} resizeMode="contain" source={imgSadMac} />
             <Text style={styles.description}>{this.state.serverStatus}</Text>
           </View>
-        </LinearGradient>
+        </View>
       );
     } else {
       return (

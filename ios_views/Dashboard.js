@@ -17,10 +17,27 @@ import Button from './Button';
 import { API_URI } from 'react-native-dotenv';
 import Player from './Player';
 
+var TVEventHandler = require('TVEventHandler');
+
 const styles = require('./styles').default;
 
 type Props = {};
 export default class Dashboard extends Component<Props> {
+
+  _tvEventHandler: any;
+
+  _enableTVEventHandler() {
+    this._tvEventHandler = new TVEventHandler();
+    this._tvEventHandler.enable(this, (cmp, evt) => {
+      console.log(evt.eventType)
+      if(evt && evt.eventType === 'up') {
+        console.log('up')
+        // set focus to play/paus
+        //this.refs[playPause].focus();
+        this.settings.setNativeProps({ hasTVPreferredFocus: true });
+      }
+    });
+  }
 
   constructor(props) {
     super(props);
@@ -29,6 +46,7 @@ export default class Dashboard extends Component<Props> {
       access_token: null,
       refresh_token: null,
       createdAt: null,
+      profileBorder: 0,
       spotifyUserData: null
     })
   }
@@ -87,7 +105,7 @@ export default class Dashboard extends Component<Props> {
       [
         {
           text: 'Sign out',
-          onPress: () => this.signOut.bind(this),
+          onPress: this.signOut.bind(this),
         },
         {
           text: 'Info',
@@ -102,6 +120,18 @@ export default class Dashboard extends Component<Props> {
     );
   }
 
+  handleProfileFocus() {
+    this.setState({
+      profileBorder: 1
+    })
+  }
+
+  handleProfileBlur() {
+    this.setState({
+      profileBorder: 0
+    })
+  }
+
   signOut() {
     AsyncStorage.clear();
     this.props.cb();
@@ -113,9 +143,9 @@ export default class Dashboard extends Component<Props> {
 
     if (!this.state.spotifyUserData) {
       return (
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#159957', '#155799']} style={styles.app}>
+        <View style={styles.app}>
           <Loader />
-        </LinearGradient>
+        </View>
       );
     } else {
       return (
@@ -123,7 +153,7 @@ export default class Dashboard extends Component<Props> {
         
           <View style={styles.containerTop}>
 
-            <TouchableHighlight>
+            <TouchableHighlight onFocus={this.handleProfileFocus.bind(this)} onBlur={this.handleProfileBlur.bind(this)} style={{borderWidth: this.state.profileBorder, borderColor: 'white', padding: 20}}>
 
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
             
@@ -139,7 +169,7 @@ export default class Dashboard extends Component<Props> {
 
             <Button text="Button" onPress={console.log('button')} />*/}
 
-            <Button text="Settings" onPress={this.handleSettingsPress.bind(this)} />
+            <Button text="Settings" ref={ref => {this.settings = ref; }} onPress={this.handleSettingsPress.bind(this)} />
 
           </View>
 
