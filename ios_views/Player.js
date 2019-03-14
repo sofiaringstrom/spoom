@@ -24,9 +24,13 @@ var TVEventHandler = require('TVEventHandler');
 const styles = require('./styles').default;
 
 const pauseImg = require('../assets/icons8-pause-button-filled-50.png');
+const pauseImgBlur = require('../assets/icons8-pause-button-50.png');
 const prevImg = require('../assets/icons8-skip-to-start-filled-50.png');
+const prevImgBlur = require('../assets/icons8-skip-to-start-50.png');
 const nextImg = require('../assets/icons8-end-filled-50.png');
-const plsyImg = require('../assets/icons8-circled-play-filled-50.png');
+const nextImgBlur = require('../assets/icons8-end-50.png');
+const playImg = require('../assets/icons8-circled-play-filled-50.png');
+const playImgBlur = require('../assets/icons8-circled-play-50.png');
 
 const btnDefault = {
   from: {
@@ -81,8 +85,11 @@ export default class Player extends Component<Props> {
       refresh_token: null,
       createdAt: null,
       btnPrevAnimation: btnDefault,
+      btnPrevImage: prevImgBlur,
       btnPlayPauseAnimation: btnDefault,
-      btnNextAnimation: btnDefault
+      btnPlayPauseImage: pauseImgBlur,
+      btnNextAnimation: btnDefault,
+      btnNextImage: nextImgBlur
     })
   }
 
@@ -125,15 +132,18 @@ export default class Player extends Component<Props> {
     console.log('focus', name)
     if (name === 'playPause') {
       this.setState({
-        btnPlayPauseAnimation: btnFocus
+        btnPlayPauseAnimation: btnFocus,
+        btnPlayPauseImage: pauseImg
       });
     } else if (name === 'prev') {
       this.setState({
-        btnPrevAnimation: btnFocus
+        btnPrevAnimation: btnFocus,
+        btnPrevImage: prevImg
       });
     } else if (name === 'next') {
       this.setState({
-        btnNextAnimation: btnFocus
+        btnNextAnimation: btnFocus,
+        btnNextImage: nextImg
       });
     }
   }
@@ -141,15 +151,18 @@ export default class Player extends Component<Props> {
   handleButtonBlur(name) {
     if (name === 'playPause') {
       this.setState({
-        btnPlayPauseAnimation: btnBlur
+        btnPlayPauseAnimation: btnBlur,
+        btnPlayPauseImage: pauseImgBlur
       });
     } else if (name === 'prev') {
       this.setState({
-        btnPrevAnimation: btnBlur
+        btnPrevAnimation: btnBlur,
+        btnPrevImage: prevImgBlur
       });
     } else if (name === 'next') {
       this.setState({
-        btnNextAnimation: btnBlur
+        btnNextAnimation: btnBlur,
+        btnNextImage: nextImgBlur
       });
     }
   }
@@ -264,13 +277,17 @@ export default class Player extends Component<Props> {
 
   render() {
 
-    if (this.state.isPlaying) {
-      const {
-        error,
-        activeTrack,
-        playerReady,
-        isPlaying
-      } = this.state
+    const {
+      error,
+      activeTrack,
+      playerReady,
+      isPlaying
+    } = this.state
+
+    console.log('activeTrack', activeTrack)
+
+    if (activeTrack) {
+      
       return (
         <Animatable.View animation="fadeIn" duration={1000} style={styles.containerPlayer}>
           <ImageBackground resizeMode={'cover'} style={styles.backgroundImagePlayer} blurRadius={20} source={activeTrack ? {uri: activeTrack.album.images[0].url} : {uri: "https://placeimg.com/300/300/any"}} >
@@ -281,9 +298,9 @@ export default class Player extends Component<Props> {
 
               <Text style={styles.artist}>{activeTrack ? activeTrack.artists[0].name : ''}</Text>
 
-              <View style={{flexDirection: 'row', marginTop: 20, width: 200, justifyContent: 'space-between'}}>
+              <View style={{flexDirection: 'row', marginTop: 20, width: 300, justifyContent: 'space-between'}}>
 
-                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'prev')} onBlur={this.handleButtonBlur.bind(this, 'prev')}>
+                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'prev')} onBlur={this.handleButtonBlur.bind(this, 'prev')} onPress={() => this.emit('previous_track')}>
                   <Animatable.View 
                     animation={this.state.btnPrevAnimation}
                     duration={200}
@@ -291,11 +308,11 @@ export default class Player extends Component<Props> {
                       flex: -1,
                       alignItems: 'center',
                     }}>
-                    <Image style={{}} source={prevImg} width={60} height={60} />
+                    <Image style={{}} source={this.state.btnPrevImage} width={60} height={60} />
                   </Animatable.View>
                 </TouchableHighlight>
 
-                <TouchableHighlight ref={ref => {this.playPause = ref; }} onFocus={this.handleButtonFocus.bind(this, 'playPause')} onBlur={this.handleButtonBlur.bind(this, 'playPause')}>
+                <TouchableHighlight ref={ref => {this.playPause = ref; }} onFocus={this.handleButtonFocus.bind(this, 'playPause')} onBlur={this.handleButtonBlur.bind(this, 'playPause')} onPress={() => this.emit(isPlaying ? 'pause' : 'play')}>
                   <Animatable.View 
                     animation={this.state.btnPlayPauseAnimation}
                     duration={200}
@@ -303,11 +320,11 @@ export default class Player extends Component<Props> {
                       flex: -1,
                       alignItems: 'center'
                     }}>
-                    <Image style={{}} source={pauseImg} width={60} height={60} />
+                    <Image style={{}} source={this.state.btnPlayPauseImage} width={60} height={60} />
                   </Animatable.View>
                 </TouchableHighlight>
 
-                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'next')} onBlur={this.handleButtonBlur.bind(this, 'next')}>
+                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'next')} onBlur={this.handleButtonBlur.bind(this, 'next')} onPress={() => this.emit('next_track')}>
                   <Animatable.View 
                     animation={this.state.btnNextAnimation}
                     duration={200}
@@ -315,7 +332,7 @@ export default class Player extends Component<Props> {
                       flex: -1,
                       alignItems: 'center'
                     }}>
-                    <Image style={{}} source={nextImg} width={60} height={60} />
+                    <Image style={{}} source={this.state.btnNextImage} width={60} height={60} />
                   </Animatable.View>
                 </TouchableHighlight>
 
@@ -331,7 +348,7 @@ export default class Player extends Component<Props> {
       return (
         <Animatable.View animation="fadeIn" duration={1000} style={styles.containerPlayer}>
 
-          <Text style={styles.description}>nothing is playing</Text>
+          <Text style={styles.description}>pls start spotify on a device</Text>
 
         </Animatable.View>
       );
