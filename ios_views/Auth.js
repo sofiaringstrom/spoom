@@ -1,13 +1,15 @@
 'use strict'
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage} from 'react-native';
+import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage, Image} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import { subscribeToCode, closeSocket } from './swotify_api';
 import * as Animatable from 'react-native-animatable';
 import { API_URI } from 'react-native-dotenv';
 
 const styles = require('./styles').default;
+
+const icon = require('../assets/spoom.png');
 
 var socketInterval;
 
@@ -59,9 +61,9 @@ export default class Auth extends Component<Props> {
 
     return (
       <Animatable.View animation="fadeIn" duration={1000} style={styles.container}>
-        <Text style={styles.title}>Swotify</Text>
+        <Image source={icon} />
 
-        <Text style={styles.login}>Scan the code to sign in to Spotify</Text>
+        <Text style={styles.login}>Scan the code with your phone to sign in with Spotify</Text>
         
         <View style={{borderWidth: 5, borderColor: 'white'}}>
           <QRCode
@@ -70,7 +72,7 @@ export default class Auth extends Component<Props> {
           />
         </View>
         
-        <Text style={styles.description}>or go to https://swotify-api.herokuapp.com and enter {this.state.code}</Text>9
+        <Text style={styles.description}>or go to https://swotify-api.herokuapp.com and enter {this.state.code}</Text>
 
       </Animatable.View>
     );

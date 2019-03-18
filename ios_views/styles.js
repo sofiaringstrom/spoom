@@ -23,7 +23,7 @@ export default (styles = StyleSheet.create({
     width: width,
     height: 200,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    //justifyContent: 'space-between',
     alignItems: 'center',
     paddingLeft: 100,
     paddingRight: 100
@@ -70,7 +70,7 @@ export default (styles = StyleSheet.create({
     marginTop: 10
   },
   userText: {
-   fontSize: 30,
+    fontSize: 30,
     color: '#fff',
   },
   loginInput: {

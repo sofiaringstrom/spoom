@@ -34,16 +34,16 @@ const playImgBlur = require('../assets/icons8-circled-play-50.png');
 
 const btnDefault = {
   from: {
-    scale: 0.8,
+    scale: 0.9,
   },
   to: {
-    scale: 0.8,
+    scale: 0.9,
   },
 };
 
 const btnFocus = {
   from: {
-    scale: 0.8,
+    scale: 0.9,
   },
   to: {
     scale: 1,
@@ -55,7 +55,7 @@ const btnBlur = {
     scale: 1,
   },
   to: {
-    scale: 0.8,
+    scale: 0.9,
   },
 };
 
@@ -69,10 +69,12 @@ export default class Player extends Component<Props> {
     this._tvEventHandler.enable(this, (cmp, evt) => {
       if(evt && evt.eventType === 'down') {
         console.log('down')
-        console.log(this.playPause)
         // set focus to play/paus
         //this.refs[playPause].focus();
         this.playPause.setNativeProps({ hasTVPreferredFocus: true });
+      } else if (evt && evt.eventType === 'up') {
+        console.log('up')
+        this.props.tvEventCb();
       }
     });
   }
@@ -131,9 +133,10 @@ export default class Player extends Component<Props> {
   handleButtonFocus(name) {
     console.log('focus', name)
     if (name === 'playPause') {
+      var isPlaying = this.state.isPlaying;
       this.setState({
         btnPlayPauseAnimation: btnFocus,
-        btnPlayPauseImage: pauseImg
+        btnPlayPauseImage: isPlaying ? pauseImg : playImg
       });
     } else if (name === 'prev') {
       this.setState({
@@ -150,9 +153,10 @@ export default class Player extends Component<Props> {
 
   handleButtonBlur(name) {
     if (name === 'playPause') {
+      var isPlaying = this.state.isPlaying;
       this.setState({
         btnPlayPauseAnimation: btnBlur,
-        btnPlayPauseImage: pauseImgBlur
+        btnPlayPauseImage: isPlaying ? pauseImgBlur : playImgBlur
       });
     } else if (name === 'prev') {
       this.setState({
@@ -182,7 +186,6 @@ export default class Player extends Component<Props> {
       );
       let responseJson = await response.json();
       // new token
-      console.log('new access_token token')
       this.setState({
         access_token: responseJson.newAuthData.access_token,
         createdAt: responseJson.newAuthData.createdAt
@@ -202,10 +205,12 @@ export default class Player extends Component<Props> {
   }
   setPlaybackState = isPlaying => {
     this.setState({
-      isPlaying
+      isPlaying: isPlaying,
+      btnPlayPauseImage: isPlaying ? pauseImgBlur : playImgBlur
     })
   }
   setDevice = device => {
+    this.props.handleDevice(device.name);
     this.setState({
       device
     })
@@ -281,10 +286,9 @@ export default class Player extends Component<Props> {
       error,
       activeTrack,
       playerReady,
-      isPlaying
+      isPlaying,
+      device
     } = this.state
-
-    console.log('activeTrack', activeTrack)
 
     if (activeTrack) {
       
@@ -312,7 +316,7 @@ export default class Player extends Component<Props> {
                   </Animatable.View>
                 </TouchableHighlight>
 
-                <TouchableHighlight ref={ref => {this.playPause = ref; }} onFocus={this.handleButtonFocus.bind(this, 'playPause')} onBlur={this.handleButtonBlur.bind(this, 'playPause')} onPress={() => this.emit(isPlaying ? 'pause' : 'play')}>
+                <TouchableHighlight hasTVPreferredFocus={true} ref={ref => {this.playPause = ref; }} onFocus={this.handleButtonFocus.bind(this, 'playPause')} onBlur={this.handleButtonBlur.bind(this, 'playPause')} onPress={() => this.emit(isPlaying ? 'pause' : 'play')}>
                   <Animatable.View 
                     animation={this.state.btnPlayPauseAnimation}
                     duration={200}

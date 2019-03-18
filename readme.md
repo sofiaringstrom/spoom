@@ -1,4 +1,4 @@
-# swotify
+# Spoom
 
 ### Install
 
