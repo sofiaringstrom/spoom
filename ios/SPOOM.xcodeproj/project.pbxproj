@@ -42,6 +42,7 @@
 		DAC270093B394985A6013E07 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 876ADD1FBA5748E8A847EDA3 /* libRNSVG.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
+		F32309AC22410C040085DDD8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F378BF35224020F2009AE9B1 /* Images.xcassets */; };
 		F378BF34224016FF009AE9B1 /* libRNExit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F378BF33223FFF99009AE9B1 /* libRNExit.a */; };
 		F378BF36224020F2009AE9B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F378BF35224020F2009AE9B1 /* Images.xcassets */; };
 /* End PBXBuildFile section */
@@ -1205,6 +1206,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F32309AC22410C040085DDD8 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

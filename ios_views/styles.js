@@ -57,6 +57,27 @@ export default (styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40
   },
+  codeDescription: {
+    fontSize: 30,
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: 10
+  },
+  codeLink: {
+    fontSize: 30,
+    color: '#fff',
+    textAlign: 'center',
+    color: '#ffb88c',
+    marginBottom: 10
+  },
+  code: {
+    fontSize: 35,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: '#de6262',
+    marginBottom: 10
+  },
   trackName: {
     fontSize: 30,
     color: '#fff',

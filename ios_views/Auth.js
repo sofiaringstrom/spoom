@@ -65,14 +65,17 @@ export default class Auth extends Component<Props> {
 
         <Text style={styles.login}>Scan the code with your phone to sign in with Spotify</Text>
         
-        <View style={{borderWidth: 5, borderColor: 'white'}}>
+        <View style={{borderWidth: 5, borderColor: 'white', marginBottom: 40}}>
           <QRCode
             value={url}
             size={300}
           />
         </View>
         
-        <Text style={styles.description}>or go to https://swotify-api.herokuapp.com and enter {this.state.code}</Text>
+        <Text style={styles.codeDescription}>or go to</Text>
+        <Text style={styles.codeLink}>{API_URI}</Text>
+        <Text style={styles.codeDescription}>and enter</Text>
+        <Text style={styles.code}>{this.state.code}</Text>
 
       </Animatable.View>
     );
