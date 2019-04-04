@@ -22,6 +22,7 @@ const styles = require('./styles').default;
 const icon = require('../assets/spoom-small.png');
 const settingsImg = require('../assets/setting.png');
 const spotifyImg = require('../assets/Spotify_Icon_RGB_Green.png');
+const userTemp = require('../assets/user.jpeg');
 
 const btnDefault = {
   from: {
@@ -134,7 +135,9 @@ export default class Dashboard extends Component<Props> {
         },
         {
           text: 'Info',
-          onPress: () => AlertIOS.alert('Info', 'Info about app.'),
+          onPress: () => AlertIOS.alert('Info', 
+            'Spoom is a hobby project made for fun and for the purpos of learning, and is not affiliated with or endorsed by Spotify. Spoom does not and will never save any personal data withour your consent. The only thing we save is a connection between your Spotify account and Spoom. If you want to remove this connection all you have to do is simple log our of the app or visit your Spotify Dashboard. If you have any questions or suggestions please check out spoom.heroku-app.com for more informaiton.'
+          ),
         },
         {
           text: 'Close',
@@ -185,7 +188,9 @@ export default class Dashboard extends Component<Props> {
 
             <View style={{flexDirection: 'row', alignItems: 'center', width: '33%'}}>
           
-              {this.state.spotifyUserData && this.state.spotifyUserData['images'] ? <Image resizeMode="stretch" style={{width: 100, height: 100, borderRadius: 50, marginRight: 30}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : null}
+              {this.state.spotifyUserData && (this.state.spotifyUserData['images'].length > 0) ? 
+              <Image resizeMode="stretch" style={{width: 100, height: 100, borderRadius: 50, marginRight: 30}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : 
+              <Image resizeMode="stretch" style={{width: 100, height: 100, borderRadius: 50, marginRight: 30}} source={userTemp} />}
               
               <View style={{flexDirection: 'column'}}>
                 <Text style={styles.userText}>Hi {this.state.spotifyUserData ? this.state.spotifyUserData['display_name'] : this.state.spotifyUserData['username']}!</Text>
