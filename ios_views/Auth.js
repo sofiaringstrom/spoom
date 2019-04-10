@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableHighlight, AsyncStorage, Image} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { subscribeToCode, closeSocket } from './swotify_api';
+import { subscribeToCode, closeSocket } from './spoom_api';
 import * as Animatable from 'react-native-animatable';
 import { API_URI } from 'react-native-dotenv';
 

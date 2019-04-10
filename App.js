@@ -14,7 +14,7 @@ import Auth from './ios_views/Auth';
 import Dashboard from './ios_views/Dashboard';
 import Loader from './ios_views/Loader';
 import Exit from 'react-native-tv-exit';
-import { checkServerStatus } from './ios_views/swotify_api';
+import { checkServerStatus } from './ios_views/spoom_api';
 
 const TVEventHandler = require('TVEventHandler');
 

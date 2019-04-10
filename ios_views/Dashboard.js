@@ -20,10 +20,12 @@ import Player from './Player';
 const styles = require('./styles').default;
 
 const icon = require('../assets/spoom-small.png');
+const deviceImg = require('../assets/icons8-multiple-devices-filled-50.png');
 const settingsImg = require('../assets/setting.png');
 const spotifyImg = require('../assets/Spotify_Icon_RGB_Green.png');
 const userTemp = require('../assets/user.jpeg');
 
+// Button animation
 const btnDefault = {
   from: {
     scale: 0.7,
@@ -51,6 +53,34 @@ const btnBlur = {
   },
 };
 
+// Device animation
+const btnDeviceDefault = {
+  from: {
+    scale: 0.75
+  },
+  to: {
+    scale: 0.75
+  }
+}
+
+const btnDeviceFocus = {
+  from: {
+    scale: 0.75
+  },
+  to: {
+    scale: 1
+  }
+}
+
+const btnDeviceBlur = {
+  from: {
+    scale: 1
+  },
+  to: {
+    scale: 0.75
+  }
+}
+
 type Props = {};
 export default class Dashboard extends Component<Props> {
 
@@ -66,11 +96,13 @@ export default class Dashboard extends Component<Props> {
       btnBorderColor: 'rgba(255, 255, 255, 0)',
       deviceName: '',
       settingsImg: settingsImg,
-      btnAnimation: btnDefault
+      btnSettingsAnimation: btnDefault,
+      btnDeviceAnimation: btnDeviceDefault
     })
 
     this.handleTVEvent = this.handleTVEvent.bind(this);
     this.setDevice = this.setDevice.bind(this);
+    this.setDevices = this.setDevices.bind(this);
   }
 
   componentDidMount() {
@@ -98,6 +130,12 @@ export default class Dashboard extends Component<Props> {
   setDevice(name) {
     this.setState({
       deviceName: name
+    })
+  }
+
+  setDevices(playerDevices) {
+    this.setState({
+      playerDevices: playerDevices
     })
   }
 
@@ -148,21 +186,58 @@ export default class Dashboard extends Component<Props> {
     );
   }
 
+  handleDevicePress() {
+    console.log(this.state.playerDevices)
+    var playerDevices = this.state.playerDevices;
+    var devices = [];
+    
+    if (playerDevices) {
+      for (var i = 0; i < playerDevices.length; i++) {
+        var deviceName = playerDevices[i]['name'];
+        var deviceId = playerDevices[i]['id'];
+        devices.push({text: deviceName, onPress: () => console.log('id', deviceId)});
+      }
+    }
+
+    console.log('devices', devices)
+
+    devices.push({text: 'Close', onPress: () => console.log('close')});
+
+    AlertIOS.alert(
+      'Spotify Connect',
+      'Select to stream from another device.',
+      devices
+    )
+  }
+
   handleTVEvent() {
     this.settings.setNativeProps({ hasTVPreferredFocus: true });
   }
 
-  handleButtonFocus() {
+  handleButtonFocus(btnType) {
     console.log('button focus')
-    this.setState({
-      btnAnimation: btnFocus
-    });
+    if (btnType === 'settings') {
+      this.setState({
+        btnSettingsAnimation: btnFocus
+      });
+    } else if (btnType === 'device') {
+      this.setState({
+        btnDeviceAnimation: btnDeviceFocus
+      });
+    }
+    
   }
 
-  handleButtonBlur() {
-    this.setState({
-      btnAnimation: btnBlur
-    });
+  handleButtonBlur(btnType) {
+    if (btnType === 'settings') {
+      this.setState({
+        btnSettingsAnimation: btnBlur
+      });
+    } else if (btnType === 'device') {
+      this.setState({
+        btnDeviceAnimation: btnDeviceBlur
+      });
+    }
   }
 
   signOut() {
@@ -173,6 +248,8 @@ export default class Dashboard extends Component<Props> {
   render() {
 
     console.log('spotifyUserData', this.state.spotifyUserData)
+
+    console.log('spotify connected devices', this.state.playerDevices)
 
     if (!this.state.spotifyUserData) {
       return (
@@ -188,7 +265,7 @@ export default class Dashboard extends Component<Props> {
 
             <View style={{flexDirection: 'row', alignItems: 'center', width: '33%'}}>
           
-              {this.state.spotifyUserData && (this.state.spotifyUserData['images'].length > 0) ? 
+              {this.state.spotifyUserData && (this.state.spotifyUserData['images']) ? 
               <Image resizeMode="stretch" style={{width: 100, height: 100, borderRadius: 50, marginRight: 30}} source={{uri: this.state.spotifyUserData['images'][0]['url']}} /> : 
               <Image resizeMode="stretch" style={{width: 100, height: 100, borderRadius: 50, marginRight: 30}} source={userTemp} />}
               
@@ -196,8 +273,32 @@ export default class Dashboard extends Component<Props> {
                 <Text style={styles.userText}>Hi {this.state.spotifyUserData ? this.state.spotifyUserData['display_name'] : this.state.spotifyUserData['username']}!</Text>
 
                 <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                  
                   <Image resizeMode="stretch" style={{width: 25, height: 25}} source={spotifyImg} />
                   <Text style={{color: '#1DB954', fontSize: 20, textTransform: 'uppercase', marginLeft: 7}}>{this.state.deviceName}</Text>
+                  <TouchableHighlight
+                    onPress={this.handleDevicePress.bind(this)}
+                    onFocus={this.handleButtonFocus.bind(this, 'device')}
+                    onBlur={this.handleButtonBlur.bind(this, 'device')}
+                  >
+                    <Animatable.View
+                      animation={this.state.btnDeviceAnimation}
+                      duration={200}
+                    >  
+                      <View style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 40,
+                        marginLeft: 10
+                      }}>
+                        <Image style={{width: 40, height: 40}} source={deviceImg} />
+                      </View>
+                    </Animatable.View>
+                  </TouchableHighlight>
                 </View>
               </View>
 
@@ -209,14 +310,24 @@ export default class Dashboard extends Component<Props> {
               <TouchableHighlight
                 ref={ref => {this.settings = ref; }}
                 onPress={this.handleSettingsPress.bind(this)}
-                onFocus={this.handleButtonFocus.bind(this)}
-                onBlur={this.handleButtonBlur.bind(this)}
+                onFocus={this.handleButtonFocus.bind(this, 'settings')}
+                onBlur={this.handleButtonBlur.bind(this, 'settings')}
               >
                 <Animatable.View
-                  animation={this.state.btnAnimation}
+                  animation={this.state.btnSettingsAnimation}
                   duration={200}
+                  style={{
+                    height: 100,
+                    width: 100,
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    marginTop: 40,
+                    alignSelf: 'center',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 50
+                  }}
                 >
-                  <Image style={{width: 80, height: 80}} source={settingsImg} />
+                  <Image style={{width: 70, height: 70}} source={settingsImg} />
                 </Animatable.View>
               </TouchableHighlight>
             </View>
@@ -224,7 +335,7 @@ export default class Dashboard extends Component<Props> {
           </View>
 
           <View style={styles.containerBottom}>
-            <Player tvEventCb={this.handleTVEvent} handleDevice={this.setDevice} />
+            <Player tvEventCb={this.handleTVEvent} handleDevice={this.setDevice} handlePlayerDevices={this.setDevices} />
           </View>
 
         </Animatable.View>

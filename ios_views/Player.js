@@ -16,7 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Loader from './Loader';
 import Button from './Button';
 import { API_URI } from 'react-native-dotenv';
-import { playerSocket } from './swotify_api';
+import { playerSocket } from './spoom_api';
 import * as Progress from 'react-native-progress';
 
 var TVEventHandler = require('TVEventHandler');
@@ -215,6 +215,13 @@ export default class Player extends Component<Props> {
       device
     })
   }
+  setDevices = playerDevices => {
+    console.log('playerDevices', playerDevices)
+    this.props.handlePlayerDevices(playerDevices);
+    this.setState({
+      playerDevices
+    })
+  }
   setVolume = volume => {
     this.setState({
       volume
@@ -268,11 +275,16 @@ export default class Player extends Component<Props> {
         }
       }, 1000)
     })
+    wrappedHandler('initial_devices', playerDevices => {
+      console.log('initial_devices', playerDevices)
+      this.setDevices(playerDevices)
+    })
     wrappedHandler('track_change', this.setTrack)
     wrappedHandler('seek', this.setProgress)
     wrappedHandler('playback_started', () => this.setPlaybackState(true))
     wrappedHandler('playback_paused', () => this.setPlaybackState(false))
     wrappedHandler('device_change', this.setDevice)
+    wrappedHandler('devices_changed', this.setDevices)
     wrappedHandler('volume_change', this.setVolume)
     wrappedHandler('track_end', () => {})
     wrappedHandler('connect_error', this.onError)
