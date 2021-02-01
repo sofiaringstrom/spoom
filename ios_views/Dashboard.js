@@ -1,7 +1,8 @@
 'use strict'
 
 import React, {Component} from 'react';
-import {Platform, 
+import {
+  Platform, 
   StyleSheet, 
   Text, 
   View, 
@@ -9,7 +10,8 @@ import {Platform,
   TouchableHighlight, 
   AsyncStorage, 
   Image, 
-  AlertIOS} from 'react-native';
+  Alert
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import Loader from './Loader';
@@ -163,7 +165,7 @@ export default class Dashboard extends Component<Props> {
   }
 
   handleSettingsPress() {
-    AlertIOS.alert(
+    Alert.alert(
       'Settings',
       '',
       [
@@ -173,7 +175,7 @@ export default class Dashboard extends Component<Props> {
         },
         {
           text: 'Info',
-          onPress: () => AlertIOS.alert('Info', 
+          onPress: () => Alert.alert('Info', 
             'Spoom is a hobby project made for fun and for the purpos of learning, and is not affiliated with or endorsed by Spotify. Spoom does not and will never save any personal data withour your consent. The only thing we save is a connection between your Spotify account and Spoom. If you want to remove this connection all you have to do is simple log our of the app or visit your Spotify Dashboard. If you have any questions or suggestions please check out spoom.heroku-app.com for more informaiton.'
           ),
         },
@@ -203,7 +205,7 @@ export default class Dashboard extends Component<Props> {
 
     devices.push({text: 'Close', onPress: () => console.log('close')});
 
-    AlertIOS.alert(
+    Alert.alert(
       'Spotify Connect',
       'Select to stream from another device.',
       devices
@@ -211,6 +213,8 @@ export default class Dashboard extends Component<Props> {
   }
 
   handleTVEvent() {
+    //this.settings.setNativeProps({ hasTVPreferredFocus: true });
+    this.settings.focus();
     this.settings.setNativeProps({ hasTVPreferredFocus: true });
   }
 
@@ -276,10 +280,11 @@ export default class Dashboard extends Component<Props> {
                   
                   <Image resizeMode="stretch" style={{width: 25, height: 25}} source={spotifyImg} />
                   <Text style={{color: '#1DB954', fontSize: 20, textTransform: 'uppercase', marginLeft: 7}}>{this.state.deviceName}</Text>
-                  <TouchableHighlight
+                  {/*<TouchableHighlight
                     onPress={this.handleDevicePress.bind(this)}
                     onFocus={this.handleButtonFocus.bind(this, 'device')}
                     onBlur={this.handleButtonBlur.bind(this, 'device')}
+                    underlayColor='rgba(0, 0, 0, 0)'
                   >
                     <Animatable.View
                       animation={this.state.btnDeviceAnimation}
@@ -298,7 +303,7 @@ export default class Dashboard extends Component<Props> {
                         <Image style={{width: 40, height: 40}} source={deviceImg} />
                       </View>
                     </Animatable.View>
-                  </TouchableHighlight>
+                  </TouchableHighlight>*/}
                 </View>
               </View>
 
@@ -312,6 +317,7 @@ export default class Dashboard extends Component<Props> {
                 onPress={this.handleSettingsPress.bind(this)}
                 onFocus={this.handleButtonFocus.bind(this, 'settings')}
                 onBlur={this.handleButtonBlur.bind(this, 'settings')}
+                underlayColor='rgba(0, 0, 0, 0)'
               >
                 <Animatable.View
                   animation={this.state.btnSettingsAnimation}
@@ -335,7 +341,7 @@ export default class Dashboard extends Component<Props> {
           </View>
 
           <View style={styles.containerBottom}>
-            <Player tvEventCb={this.handleTVEvent} handleDevice={this.setDevice} handlePlayerDevices={this.setDevices} />
+            <Player tvEventCb={this.handleTVEvent.bind(this)} signOutCb={this.signOut.bind(this)} handleDevice={this.setDevice} handlePlayerDevices={this.setDevices} />
           </View>
 
         </Animatable.View>

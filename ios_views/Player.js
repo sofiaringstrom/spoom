@@ -70,11 +70,16 @@ export default class Player extends Component<Props> {
       if(evt && evt.eventType === 'down') {
         console.log('down')
         // set focus to play/paus
-        //this.refs[playPause].focus();
+        this.playPause.focus();
         this.playPause.setNativeProps({ hasTVPreferredFocus: true });
       } else if (evt && evt.eventType === 'up') {
         console.log('up')
         this.props.tvEventCb();
+      }
+      
+      if (evt && evt.eventType === 'playPause') {
+        console.log('sign out')
+        this.props.signOutCb();
       }
     });
   }
@@ -316,7 +321,7 @@ export default class Player extends Component<Props> {
 
               <View style={{flexDirection: 'row', marginTop: 20, width: 300, justifyContent: 'space-between'}}>
 
-                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'prev')} onBlur={this.handleButtonBlur.bind(this, 'prev')} onPress={() => this.emit('previous_track')}>
+                <TouchableHighlight underlayColor='rgba(0, 0, 0, 0)' onFocus={this.handleButtonFocus.bind(this, 'prev')} onBlur={this.handleButtonBlur.bind(this, 'prev')} onPress={() => this.emit('previous_track')}>
                   <Animatable.View 
                     animation={this.state.btnPrevAnimation}
                     duration={200}
@@ -328,19 +333,19 @@ export default class Player extends Component<Props> {
                   </Animatable.View>
                 </TouchableHighlight>
 
-                <TouchableHighlight hasTVPreferredFocus={true} ref={ref => {this.playPause = ref; }} onFocus={this.handleButtonFocus.bind(this, 'playPause')} onBlur={this.handleButtonBlur.bind(this, 'playPause')} onPress={() => this.emit(isPlaying ? 'pause' : 'play')}>
+                <TouchableHighlight underlayColor='rgba(0, 0, 0, 0)' hasTVPreferredFocus={true} ref={ref => {this.playPause = ref; }} onFocus={this.handleButtonFocus.bind(this, 'playPause')} onBlur={this.handleButtonBlur.bind(this, 'playPause')} onPress={() => this.emit(isPlaying ? 'pause' : 'play')}>
                   <Animatable.View 
                     animation={this.state.btnPlayPauseAnimation}
                     duration={200}
                     style={{
                       flex: -1,
-                      alignItems: 'center'
+                      alignItems: 'center',
                     }}>
-                    <Image style={{}} source={this.state.btnPlayPauseImage} width={60} height={60} />
+                    <Image source={this.state.btnPlayPauseImage} width={60} height={60} />
                   </Animatable.View>
                 </TouchableHighlight>
 
-                <TouchableHighlight onFocus={this.handleButtonFocus.bind(this, 'next')} onBlur={this.handleButtonBlur.bind(this, 'next')} onPress={() => this.emit('next_track')}>
+                <TouchableHighlight underlayColor='rgba(0, 0, 0, 0)' onFocus={this.handleButtonFocus.bind(this, 'next')} onBlur={this.handleButtonBlur.bind(this, 'next')} onPress={() => this.emit('next_track')}>
                   <Animatable.View 
                     animation={this.state.btnNextAnimation}
                     duration={200}
