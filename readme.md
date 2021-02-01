@@ -3,7 +3,7 @@
 
 ## Notes
 
-Currently the focus management is not working properly due to outdated packages. Going forward the react-native package needs to be replaced with react-native-tvos for better support and functionality.
+Currently the focus management is not working properly due to outdated packages. Going forward the react-native package needs to be replaced with [react-native-tvos](https://github.com/react-native-tvos/react-native-tvos) for better support and functionality.
 
 
 As a temporaly solution a sign out can be performed by pressing space.
