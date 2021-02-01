@@ -22,11 +22,14 @@ $ yarn install
 
 ## Run dev
 
-Open xcode project.
+Open xcode project. **spoom/ios/SPOOM.xcodeproj**
 
-Select Spoom-tvOS -> Apple TV
+Select Spoom-tvOS and run in a tvOS simulator or on a physical device.
 
-Run
+![note](https://imgur.com/rXMzJzp)
+
+
+Click run (⌘R).
 
 ## Pairing an Apple TV with Xcode
 
