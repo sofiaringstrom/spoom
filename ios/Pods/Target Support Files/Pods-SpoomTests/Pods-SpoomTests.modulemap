@@ -1,0 +1,6 @@
+framework module Pods_SpoomTests {
+  umbrella header "Pods-SpoomTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
