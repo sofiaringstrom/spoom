@@ -1,20 +1,34 @@
 # Spoom
 
-### Install
+
+## Notes
+
+Currently the focus management is not working properly due to outdated packages. Going forward the react-native package needs to be replaced with react-native-tvos for better support and functionality.
+
+
+As a temporaly solution a sign out can be performed by pressing space.
+
+
+## Using
+
+* [spoom-api](https://github.com/sofiaringstrom/spoom-api)
+* React Native 0.58.6
+
+## Install
 
 ```
 $ yarn install
 ```
 
-### Run dev
+## Run dev
 
 Open xcode project.
 
-Select Swotify-tvOS -> Apple TV
+Select Spoom-tvOS -> Apple TV
 
 Run
 
-### Pairing an Apple TV with Xcode
+## Pairing an Apple TV with Xcode
 
 Ensure your Mac and Apple TV are connected to the same network.
 
@@ -26,12 +40,12 @@ Select the Apple TV in the Discovered area in Xcode and enter the verification c
 
 Click the Connect button. When it's successfully paired, a network connection icon appears beside the Apple TV.
 
-### Cheatsheet
+## Cheatsheet
 
 In case of
 
 ```
-error: Build input file cannot be found: '/Users/sofiaringstrom/Documents/Project tvOS/swotify/node_modules/react-native/third-party/double-conversion-1.1.6/src/fast-dtoa.cc'
+error: Build input file cannot be found: '{project_path}/spoom/node_modules/react-native/third-party/double-conversion-1.1.6/src/fast-dtoa.cc'
 ```
 run
 
