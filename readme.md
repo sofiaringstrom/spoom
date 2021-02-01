@@ -26,7 +26,7 @@ Open xcode project. **spoom/ios/SPOOM.xcodeproj**
 
 Select Spoom-tvOS and run in a tvOS simulator or on a physical device.
 
-![note](https://imgur.com/rXMzJzp)
+![note](https://i.imgur.com/rXMzJzp.png)
 
 
 Click run (⌘R).
